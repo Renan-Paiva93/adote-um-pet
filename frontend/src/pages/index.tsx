@@ -1,9 +1,23 @@
 import type { NextPage } from 'next'
 import Titulo from '../ui/components/Titulo/Titulo';
 import Lista from '../ui/components/Lista/Lista';
-
+import { Dialog, TextField, Grid, DialogActions, Button, Snackbar } from '@mui/material';
+import { useIndex } from '../data/hooks/pages/useIndex';
 
 const Home: NextPage = () => {
+  const {
+    listaPets,
+    petSelecionado,
+    setPetSelecionado,
+    email,
+    setEmail,
+    valor,
+    setValor,
+    mensagem, 
+    setMensagem,
+    adotar
+  } = useIndex();
+
   return (
     <div>
      <Titulo 
@@ -16,20 +30,59 @@ const Home: NextPage = () => {
      } />
 
      <Lista 
-      pets={[
-        {
-          id: 1,
-          nome: 'bidu',
-          historica: 'era uma vez blablabla',
-          foto:'https://static.wixstatic.com/media/1b82a5_503c2f4782ee416b8d65b75b3b9bea42~mv2.jpg/v1/fill/w_800,h_600,al_c,q_90/1b82a5_503c2f4782ee416b8d65b75b3b9bea42~mv2.jpg'
-        },
-        {
-          id: 2,
-          nome: 'Scooby',
-          historica: 'era uma vez blablabla',
-          foto:'https://www.acasadoanimal.com.br/wp-content/uploads/2018/10/pet.png'
-        },
-      ]}
+      pets={listaPets}
+      onSelect={(pet) => setPetSelecionado(pet)}
+     />
+
+
+     <Dialog 
+        open={petSelecionado !== null} 
+        fullWidth
+        PaperProps={{ sx: { p: 5 } }}
+        onClose={() => setPetSelecionado(null)}
+     >
+       <Grid container spacing={2} >
+         <Grid item xs={12} >
+          <TextField 
+            label={'E-mail'}
+            type={'email'}
+            fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          /> 
+
+        </Grid>
+        <Grid item xs={12} >
+          <TextField 
+            label={'Quantia por mês'}
+            type={'number'}
+            fullWidth
+            value={valor}
+            onChange={(e) => setValor(e.target.value)}
+          /> 
+       </Grid>
+       </Grid>
+       <DialogActions sx={{mt: 5}} >
+          <Button
+            color={'secondary'}
+            onClick={() => setPetSelecionado(null)}
+          >
+           Cancelar
+          </Button>
+          <Button
+            variant={'contained'}
+            onClick={() => adotar()}
+          >
+            Confirmar adoção
+          </Button>
+       </DialogActions>
+     </Dialog>
+
+     <Snackbar 
+        open={mensagem.length > 0}
+        message={mensagem} // feed back para o usuário
+        autoHideDuration={2500}
+        onClose={() => setMensagem('')}
      />
     </div>
   )
