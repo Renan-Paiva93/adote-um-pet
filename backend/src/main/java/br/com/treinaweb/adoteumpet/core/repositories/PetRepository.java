@@ -13,7 +13,7 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
         if(petOptional.isPresent()) {
             return petOptional.get();
         } 
-        throw new EntityNotFoundException("Pet não encontrado")
+        throw new EntityNotFoundException("Pet não encontrado");
     }
     
 }
