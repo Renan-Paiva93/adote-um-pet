@@ -3,6 +3,6 @@ export const TextService = {
         if(text.length < tamanhoMaximo){
             return text;
         }
-        text.slice(0,tamanhoMaximo) + '...';
+        return text.slice(0,tamanhoMaximo) + '...';
     }
 }
