@@ -23,7 +23,7 @@ public class AdoteUmPetApplication implements CommandLineRunner  {
 		var pet = new Pet();
 		pet.setNome("renanzinho");
 		pet.setHistoria("historia top");
-		pet.setFoto("http://www.exemplo.com.br/foto.png");
+		pet.setFoto("https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/purina-dia-mundial-dos-animais-protecao-bem-estar-e-saude-do-seu-pet.jpg?itok=wDV_gDHU");
 		petRepository.save(pet);
 	}
 

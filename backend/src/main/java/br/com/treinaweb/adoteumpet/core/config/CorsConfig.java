@@ -1,17 +1,20 @@
-package br.com.treinaweb.adoteumpet.api.common.config;
+package br.com.treinaweb.adoteumpet.core.config;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+@Configuration
 public class CorsConfig implements WebMvcConfigurer {
     
     @Override
-    public void addCorsMappings(CorsRegistry registry) {
+    public void addCorsMappings( CorsRegistry registry) {
         registry.addMapping("/**")
         .allowedOrigins("*")
         .allowedMethods("*")
         .allowedHeaders("*");
     }
 }
-
+    
