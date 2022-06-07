@@ -35,5 +35,4 @@ public class AdocaoMapper {
             .pet(petMapper.toResponse(adocao.getPet()))
             .build();
     }
-
 }
