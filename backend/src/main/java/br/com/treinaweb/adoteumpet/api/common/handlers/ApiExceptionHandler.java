@@ -1,7 +1,6 @@
 package br.com.treinaweb.adoteumpet.api.common.handlers;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +16,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+
 import br.com.treinaweb.adoteumpet.api.common.dtos.ErrorReponse;
 
 @RestControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private final SnakeCaseStrategy snakeCaseStrategy = new SnakeCaseStrategy();
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -38,14 +41,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .errors(convertFielErrors(exception.getBindingResult().getFieldErrors()))
             .build();
 
-        exception.getBindingResult().getFieldErrors();
         return new ResponseEntity<>(body, status);
     }
 
     private Map<String, List<String>> convertFielErrors(List<FieldError> fieldErrors) {
         var errors = new HashMap<String, List<String>>();
         fieldErrors.stream().forEach(fieldError -> {
-            var field = fieldError.getField();
+            var field = snakeCaseStrategy.translate(fieldError.getField());
             if (errors.containsKey(field)) {
                 errors.get(field).add(fieldError.getDefaultMessage());
             } else {
