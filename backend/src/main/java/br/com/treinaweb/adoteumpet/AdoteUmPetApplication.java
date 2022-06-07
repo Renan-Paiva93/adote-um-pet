@@ -21,9 +21,9 @@ public class AdoteUmPetApplication implements CommandLineRunner  {
 	@Override
 	public void run(String... args) throws Exception {
 		var pet = new Pet();
-		pet.setNome("renanzinho");
-		pet.setHistoria("historia top");
-		pet.setFoto("https://www.purina-latam.com/sites/g/files/auxxlc391/files/styles/social_share_large/public/purina-dia-mundial-dos-animais-protecao-bem-estar-e-saude-do-seu-pet.jpg?itok=wDV_gDHU");
+		pet.setNome("Joe");
+		pet.setHistoria("O Joe tem 12 anos, raça Fox Paulistinha, quando ele era bebê o Joe foi curado da doença  chamada cinomose canina. Hoje ele está muito bem e vive com Mel, os dois tiveram 4 filhotes juntos.");
+		pet.setFoto("https://diariodonordeste.verdesmares.com.br/image/contentid/policy:7.4516754:1621515234/fox-paulistinha_Easy-Resize.com.jpg?f=16x9&$p$f=1af7684");
 		petRepository.save(pet);
 	}
 
