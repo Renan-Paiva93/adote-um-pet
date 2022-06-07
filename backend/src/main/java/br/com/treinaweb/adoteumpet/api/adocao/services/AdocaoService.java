@@ -1,5 +1,7 @@
 package br.com.treinaweb.adoteumpet.api.adocao.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,12 @@ public class AdocaoService {
         var adocaoToCreate = adocaoMapper.toModel(adocaoRequest);
         var createAdocao = adocaoRepository.save(adocaoToCreate);
         return adocaoMapper.toResponse(createAdocao);
+    }
+
+    public List<AdocaoResponse> findAll() {
+        return adocaoRepository.findAll()
+        .stream()
+        .map(adocaoMapper::toResponse)
+        .toList();
     }
 }
