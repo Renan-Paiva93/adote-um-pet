@@ -1,10 +1,17 @@
 package br.com.treinaweb.adoteumpet.api.common.handlers;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -28,8 +35,27 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             .cause(exception.getClass().getSimpleName())
             .message("Houveram erros de validação")
             .timestamp(LocalDateTime.now())
+            .errors(convertFielErrors(exception.getBindingResult().getFieldErrors()))
             .build();
+
+        exception.getBindingResult().getFieldErrors();
         return new ResponseEntity<>(body, status);
+    }
+
+    private Map<String, List<String>> convertFielErrors(List<FieldError> fieldErrors) {
+        var errors = new HashMap<String, List<String>>();
+        fieldErrors.stream().forEach(fieldError -> {
+            var field = fieldError.getField();
+            if (errors.containsKey(field)) {
+                errors.get(field).add(fieldError.getDefaultMessage());
+            } else {
+                errors.put(
+                    field, 
+                    Stream.of(fieldError.getDefaultMessage()).collect(Collectors.toList())
+                );
+            }
+        });
+        return errors;
     }
 
 }
