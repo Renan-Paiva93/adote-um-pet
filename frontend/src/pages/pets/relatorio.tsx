@@ -12,6 +12,7 @@ import {
 import { useRelatorio } from "../../data/hooks/pages/pets/useRelatorio";
 
 const Relatorio: NextPage = () => {
+    const { listaRelatorio } = useRelatorio();
     return (
         <>
             <Titulo
@@ -31,11 +32,13 @@ const Relatorio: NextPage = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow>
-                            <TableCell>teste</TableCell>
-                            <TableCell>teste</TableCell>
-                            <TableCell align={'right'} >50</TableCell>
-                        </TableRow>
+                        { listaRelatorio.map((relatorio) => (      
+                            <TableRow key={relatorio.id} >
+                              <TableCell>{relatorio.pet.nome}</TableCell>
+                              <TableCell>{relatorio.email}</TableCell>
+                              <TableCell align={'right'} >{relatorio.valor}</TableCell>
+                          </TableRow>  
+                        ))}        
                     </TableBody>
                 </Table>
             </TableContainer>
